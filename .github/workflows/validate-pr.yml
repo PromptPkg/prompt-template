@@ -1,0 +1,56 @@
+name: Validate Prompt Submissions
+
+on:
+  pull_request:
+    branches:
+      - main  # Run on PRs targeting the main branch
+    paths:
+      - 'prompts/**'  # Only run when files in the prompts directory are changed
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3  # Valid GitHub Action
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3  # Valid GitHub Action
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: |
+          npm install -g ajv-cli handlebars
+
+      - name: Validate Prompt JSON
+        run: |
+          for file in prompts/*/prompt.json; do
+            echo "Validating $file..."
+            ajv validate -s schemas/prompt-schema.json -d "$file" || exit 1
+          done
+
+      - name: Generate README
+        run: |
+          for dir in prompts/*/; do
+            if [ -f "$dir/prompt.json" ]; then
+              echo "Generating README for $dir..."
+              prompt_json=$(cat "$dir/prompt.json")
+              readme_content=$(echo "$prompt_json" | handlebars templates/README-template.md)
+              echo "$readme_content" > "$dir/README.md"
+            fi
+          done
+
+      - name: Check for README Changes
+        id: check-readme  # Add an ID for this step
+        run: |
+          git diff --exit-code prompts/*/README.md || (echo "READMEs are not up to date. Please regenerate them using the provided template." && exit 1)
+
+      - name: Commit README Changes
+        if: failure() && steps.check-readme.outcome == 'failure'  # Use the correct step ID
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add prompts/*/README.md
+          git commit -m "Auto-generate READMEs based on prompt.json"
+          git push
