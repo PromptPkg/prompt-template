@@ -67,6 +67,46 @@ The prompt schema defines the structure and metadata for AI prompts in this repo
 }
 ```
 
+## How to Contribute
+
+🚀 Recommended: Submit new prompts from https://promptpkg.com
+
+If you prefer to use GitHub directly:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/PromptPkg/prompt-template.git
+   cd prompt-template
+   ```
+
+2. **Create a New Branch**:
+   ```bash
+   git checkout -b add-new-prompt
+   ```
+
+3. **Add Your Prompt**:
+   - Create a new folder under `prompts/` (e.g., `prompts/new-prompt/`).
+   - Add a `prompt.json` file following the [schema](../schemas/prompt-schema.json).
+   - A `README.md` will be automatically generated.
+
+4. **Open a Pull Request**:
+   - Commit your changes:
+     ```bash
+     git add prompts/new-prompt/
+     git commit -m "Add new prompt: new-prompt"
+     git push origin add-new-prompt
+     ```
+   - Open a pull request to the `main` branch.
+
+5. **Review and Merge**:
+   - Your prompt will be validated automatically.
+   - Once approved, it will be merged into the repository.
+```
+## Decentralized Storage (IPFS & NFT)
+
+Lazy backups of high value dependencies are provided for immuatable packages without censorship.
+
 ## Licensing
 
 By submitting a prompt to this repository, you agree to license it under the same terms as this repository (MIT License).
+

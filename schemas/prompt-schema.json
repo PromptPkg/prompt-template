@@ -59,8 +59,8 @@
             "description": "A URL-friendly name for the prompt. Must be lowercase and use hyphens instead of spaces."
           },
           "author": {
-            "type": "string",
-            "description": "The author of the prompt. This can be a GitHub username or full name."
+            "type": "number",
+            "description": "The GitHub user ID of the author."
           },
           "description": {
             "type": "string",
@@ -145,4 +145,4 @@
       "prompt"
     ],
     "description": "Schema for defining AI prompts. This schema ensures consistency and compatibility across all prompts in the repository."
-  }
+}

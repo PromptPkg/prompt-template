@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3  # Valid GitHub Action
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # Valid GitHub Action
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
@@ -41,13 +41,20 @@ jobs:
             fi
           done
 
+      - name: Check for Modifications to Existing Prompts
+        run: |
+          if git diff --name-only main...HEAD | grep -E '^prompts/(?!new-prompt/)'; then
+            echo "Error: Modifications to existing prompts are not allowed."
+            exit 1
+          fi
+
       - name: Check for README Changes
-        id: check-readme  # Add an ID for this step
+        id: check-readme
         run: |
           git diff --exit-code prompts/*/README.md || (echo "READMEs are not up to date. Please regenerate them using the provided template." && exit 1)
 
       - name: Commit README Changes
-        if: failure() && steps.check-readme.outcome == 'failure'  # Use the correct step ID
+        if: failure() && steps.check-readme.outcome == 'failure'
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"

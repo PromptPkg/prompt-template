@@ -2,6 +2,10 @@
 
 {{metadata.description}}
 
+## Author
+- **Username**: [{{metadata.author.username}}](https://github.com/{{metadata.author.username}})
+- **Avatar**: ![Avatar]({{metadata.author.avatarUrl}})
+
 ## Usage
 
 1. **Variables**: Fill in the following variables to use this prompt:
