@@ -48,6 +48,20 @@ jobs:
             exit 1
           fi
 
+      - name: Auto-populate Metadata Fields
+        run: |
+            for file in prompts/*/prompt.json; do
+            echo "Auto-populating metadata for $file..."
+            current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            tmp=$(mktemp)
+            jq --arg author "$GITHUB_ACTOR" \
+                --arg time "$current_time" \
+                '.metadata.author = $author |
+                .metadata.createdAt = $time |
+                .metadata.updatedAt = $time' "$file" > "$tmp" && mv "$tmp" "$file"
+            echo "Updated $file with metadata defaults."
+            done       
+
       - name: Check for README Changes
         id: check-readme
         run: |
