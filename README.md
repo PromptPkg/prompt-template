@@ -101,7 +101,7 @@ If you prefer to use GitHub directly:
 5. **Review and Merge**:
    - Your prompt will be validated automatically.
    - Once approved, it will be merged into the repository.
-```
+
 ## Decentralized Storage (IPFS & NFT)
 
 Lazy backups of high value dependencies are provided for immuatable packages without censorship.
@@ -109,4 +109,3 @@ Lazy backups of high value dependencies are provided for immuatable packages wit
 ## Licensing
 
 By submitting a prompt to this repository, you agree to license it under the same terms as this repository (MIT License).
-
